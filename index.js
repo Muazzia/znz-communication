@@ -18,6 +18,7 @@ require("./utils/passport/passport");
 const authR = require("./routes/Auth/auth");
 const userR = require("./routes/User/userRoutes");
 const postR = require("./routes/Post/postRoutes");
+const { checkJWT } = require("./middleware/authenticationMiddleware");
 //  middlewares
 app.use(cors());
 app.use(express.json());
@@ -26,7 +27,7 @@ app.use(bodyParser.json());
 
 app.use("/api/auth/user", authR);
 app.use("/api/user", userR);
-app.use("/api/user", postR);
+app.use("/api/user", checkJWT, postR);
 // for views in node project
 app.set("view engine", "ejs");
 app.use(express.static("public"));
